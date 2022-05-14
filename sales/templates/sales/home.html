@@ -5,12 +5,17 @@ home
 {% endblock title %}
 
 {% block content %}
-{{hello}}
-<hr>
+
 
 <form action="" method="POST">
     {% csrf_token %}
     {{form|crispy}}
     <button type = "submit" class="btn btn-primary mt-3">search</button>
 </form>
+{% if sales_df %}
+    {{sales_df|safe}}
+{% else %}
+    <h3>no data</h3>
+<br>
+{% endif %}
 {% endblock content %}
