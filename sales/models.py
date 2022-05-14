@@ -25,7 +25,7 @@ class Position(models.Model):
 
 class Sale(models.Model):
     transaction_id = models.CharField(max_length=12, blank=True)
-    position = models.ManyToManyField(Position)
+    positions = models.ManyToManyField(Position)
     total_price = models.FloatField(blank=True, null= True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     salesman = models.ForeignKey(Profile, on_delete=models.CASCADE)
