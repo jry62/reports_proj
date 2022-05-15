@@ -1,10 +1,11 @@
 from typing import List
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+from sklearn.semi_supervised import LabelSpreading
 from .models import Sale
 from .forms import SalesSearchForm
 import pandas as pd
-from .utils import get_customer_from_id, get_salesman_from_id
+from .utils import get_customer_from_id, get_salesman_from_id, get_chart, get_graph
 
 # Create your views here.
 
@@ -13,6 +14,7 @@ def home_view(request):
     positions_df = None
     merged_df = None
     df = None
+    chart = None
 
     form = SalesSearchForm(request.POST or None)
 
@@ -49,6 +51,8 @@ def home_view(request):
 
             df = merged_df.groupby('transaction_id', as_index=False)['price'].agg('sum')
 
+            chart = get_chart(chart_type, df, labels=df['transaction_id'].values)
+            print('chart', chart)
             sales_df = sales_df.to_html()
             positions_df = positions_df.to_html()
             merged_df = merged_df.to_html()
@@ -63,6 +67,8 @@ def home_view(request):
         'positions_df': positions_df,
         'merged_df': merged_df,
         'df': df,
+        'chart': chart,
+
     }
     return render(request, 'sales/home.html', context)
 
