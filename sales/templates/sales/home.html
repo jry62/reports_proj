@@ -13,9 +13,14 @@ home
     <button type = "submit" class="btn btn-primary mt-3">search</button>
 </form>
 {% if sales_df %}
+    sales_df
     {{sales_df|safe}}
     <br>
+    positions_df
     {{positions_df|safe}}
+    <br>
+    merged_df
+    {{merged_df|safe}}
 {% else %}
     <h3>no data</h3>
 <br>
