@@ -9,3 +9,6 @@ def get_report_image(data):
     img_name = str(uuid.uuid4())[:10]+ '.png'
     data = ContentFile(decoded_img, name=img_name)
     return data
+
+def is_ajax():
+    return request.headers.get('x-requested-with') == 'XMLHttpRequest'
